@@ -1,10 +1,23 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
+  <div class="app">
+    <nav>
+      <router-link to="/login">登录</router-link> |
+      <router-link to="/main">首页</router-link>
+    </nav>
+  </div>
+
   <router-view />
 </template>
+
+<script lang="ts">
+import { defineComponent } from '@vue/runtime-core'
+
+export default defineComponent({
+  setup() {
+    return {}
+  }
+})
+</script>
 
 <style lang="scss">
 #app {
