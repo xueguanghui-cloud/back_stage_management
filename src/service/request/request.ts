@@ -11,6 +11,7 @@ class GHRequest {
     this.instance = axios.create(config)
     this.interceptors = config.interceptors
     this.showLoading = config.showLoading ?? false
+
     // 从config中取出的拦截器时对应的实例的拦截器
     this.instance.interceptors.request.use(
       this.interceptors?.requestInterceptor,
@@ -54,16 +55,41 @@ class GHRequest {
     )
   }
 
-  request(config: GHRequestConfig): void {
-    if (config.interceptors?.requestInterceptor) {
-      config = config.interceptors.requestInterceptor(config)
-    }
-    this.instance.request(config).then((res) => {
-      if (config.interceptors?.responseInterceptor) {
-        res = config.interceptors.responseInterceptor(res)
+  // request 请求
+  request<T>(config: GHRequestConfig): Promise<T> {
+    return new Promise((resolve, reject) => {
+      if (config.interceptors?.requestInterceptor) {
+        config = config.interceptors.requestInterceptor(config)
       }
-      console.log(res)
+      this.instance
+        .request<any, T>(config)
+        .then((res) => {
+          if (config.interceptors?.responseInterceptor) {
+            res = config.interceptors.responseInterceptor(res)
+          }
+          resolve(res)
+        })
+        .catch((err) => {
+          reject(err)
+        })
     })
+  }
+
+  // get请求
+  get<T>(config: GHRequestConfig): Promise<T> {
+    return this.request<T>({ ...config, method: 'GET' })
+  }
+  // post请求
+  post<T>(config: GHRequestConfig): Promise<T> {
+    return this.request<T>({ ...config, method: 'POST' })
+  }
+  // post请求
+  delete<T>(config: GHRequestConfig): Promise<T> {
+    return this.request<T>({ ...config, method: 'DELETE' })
+  }
+  // post请求
+  patch<T>(config: GHRequestConfig): Promise<T> {
+    return this.request<T>({ ...config, method: 'PATCH' })
   }
 }
 
