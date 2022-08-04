@@ -1,5 +1,5 @@
 import axios from 'axios'
-import type { AxiosInstance, AxiosRequestConfig } from 'axios'
+import type { AxiosInstance } from 'axios'
 import type { GHRequestInterceptors, GHRequestConfig } from './type'
 
 class GHRequest {
