@@ -3,7 +3,8 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import { registerApp } from './global'
-import requestService from './service'
+import './assets/css/index.scss'
+import { setupStore } from './store'
 // 全局引入
 // import ElementPlus from 'element-plus'
 // import 'element-plus/dist/index.css'
@@ -20,6 +21,7 @@ interface DataType {
 registerApp(app)
 app.use(router)
 app.use(store)
+setupStore()
 app.mount('#app')
 
 // requestService.request({
@@ -40,16 +42,17 @@ app.mount('#app')
 // requestService
 //   .request<DataType>({
 //     url: '/home/multidata',
-//     method: 'GET'
+//     method: 'GET',
+//     showLoading: true
 //   })
 //   .then((res) => {
 //     console.log(res)
 //   })
 
-requestService
-  .get<DataType>({
-    url: '/home/multidata'
-  })
-  .then((res) => {
-    console.log(res)
-  })
+// requestService
+//   .get<DataType>({
+//     url: '/home/multidata'
+//   })
+//   .then((res) => {
+//     console.log(res)
+//   })
