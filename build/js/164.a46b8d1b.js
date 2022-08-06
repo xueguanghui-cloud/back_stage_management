@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkback_stage_management"]=self["webpackChunkback_stage_management"]||[]).push([[164],{1164:function(n,e,a){a.r(e),a.d(e,{default:function(){return k}});var u=a(6252),t={class:"menu"},r=(0,u._)("h2",null,"menu",-1),c=[r];function s(n,e,a,r,s,m){return(0,u.wg)(),(0,u.iD)("div",t,c)}var m=(0,u.aZ)({name:"menu",setup:function(){return{}}}),f=a(3744);const i=(0,f.Z)(m,[["render",s]]);var k=i}}]);
+//# sourceMappingURL=164.a46b8d1b.js.map
