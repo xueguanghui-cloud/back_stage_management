@@ -1,7 +1,12 @@
 <template>
   <div class="login-panel">
     <h1 class="title">后台管理系统</h1>
-    <el-tabs type="border-card" stretch v-model="currentRef">
+    <el-tabs
+      type="border-card"
+      class="border-card"
+      stretch
+      v-model="currentRef"
+    >
       <!-- 选择账号登录 -->
       <el-tab-pane name="account">
         <template #label>
@@ -78,6 +83,9 @@ export default defineComponent({
   .title {
     color: #e7e3e3;
     text-align: center;
+  }
+  .border-card {
+    box-shadow: 0 0 20px #d0d0d0;
   }
 
   .account-control {
