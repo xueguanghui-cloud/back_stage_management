@@ -5,7 +5,7 @@
       <span class="title" v-show="!collapse">Vue3+TS</span>
     </div>
     <el-menu
-      default-active="1"
+      default-active="2"
       class="el-menu-vertical"
       background-color="#001529"
       text-color="#b7bdc3"
@@ -23,15 +23,15 @@
             </template>
             <!-- 遍历里面的item -->
             <template v-for="subitem in item.children" :key="subitem.id">
-              <el-menu-item-group>
-                <el-menu-item
-                  :index="subitem.id + ''"
-                  @click="handleMenuItemClick(subitem)"
-                >
-                  <i v-if="subitem.icon" :class="subitem.icon"></i>
-                  <span>{{ subitem.name }}</span>
-                </el-menu-item>
-              </el-menu-item-group>
+              <!-- <el-menu-item-group> -->
+              <el-menu-item
+                :index="subitem.id + ''"
+                @click="handleMenuItemClick(subitem)"
+              >
+                <i v-if="subitem.icon" :class="subitem.icon"></i>
+                <span>{{ subitem.name }}</span>
+              </el-menu-item>
+              <!-- </el-menu-item-group> -->
             </template>
           </el-sub-menu>
         </template>

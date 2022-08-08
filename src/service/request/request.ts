@@ -58,7 +58,6 @@ class GHRequest {
 
         // 将loading移除
         this.loading?.close()
-
         const code = res.data.code
 
         if (code !== 0) {
