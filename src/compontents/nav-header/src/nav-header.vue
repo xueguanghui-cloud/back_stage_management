@@ -7,7 +7,7 @@
     ></i>
 
     <div class="content">
-      <div>面包屑</div>
+      <gh-breadcrumb :breadcrumbs="breadcrumbs"></gh-breadcrumb>
       <div class="userInfo">
         <user-info></user-info>
       </div>
@@ -18,8 +18,10 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import userInfo from './user-info.vue'
+import ghBreadcrumb, { IBreadcrumb } from '@/base-ui/breadcrumb'
+
 export default defineComponent({
-  components: { userInfo },
+  components: { userInfo, ghBreadcrumb },
   emits: ['foldChange'],
   setup(props, { emit }) {
     const isFold = ref(false)
@@ -27,7 +29,10 @@ export default defineComponent({
       isFold.value = !isFold.value
       emit('foldChange', isFold.value)
     }
-    return { isFold, handleFoldClick }
+
+    // 面包屑数据56min
+    const breadcrumbs: IBreadcrumb[] = []
+    return { isFold, handleFoldClick, breadcrumbs }
   }
 })
 </script>

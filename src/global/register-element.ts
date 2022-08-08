@@ -28,7 +28,9 @@ import {
   ElCol,
   ElSelect,
   ElOption,
-  ElDatePicker
+  ElDatePicker,
+  ElBreadcrumb,
+  ElBreadcrumbItem
 } from 'element-plus'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 const components = [
@@ -59,7 +61,9 @@ const components = [
   ElCol,
   ElSelect,
   ElOption,
-  ElDatePicker
+  ElDatePicker,
+  ElBreadcrumb,
+  ElBreadcrumbItem
 ]
 
 export default function (app: App) {
