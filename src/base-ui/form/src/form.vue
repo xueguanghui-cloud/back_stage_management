@@ -1,5 +1,8 @@
 <template>
   <div class="gh-form">
+    <div class="header">
+      <slot name="header"></slot>
+    </div>
     <el-form :label-width="labelWidth">
       <el-row :gutter="20">
         <template v-for="(item, index) in formItems" :key="index">
@@ -17,6 +20,7 @@
                   :placeholder="item.placeholder"
                   :show-password="item.type === 'password'"
                   v-bind="item.otherOptions"
+                  v-model="formData[`${item.field}`]"
                 ></el-input>
               </template>
               <!-- select -->
@@ -24,6 +28,7 @@
                 <el-select
                   :placeholder="item.placeholder"
                   v-bind="item.otherOptions"
+                  v-model="formData[`${item.field}`]"
                 >
                   <el-option
                     v-for="option in item.options"
@@ -35,20 +40,30 @@
               </template>
               <!-- datapicker -->
               <template v-else-if="item.type === 'datapicker'">
-                <el-date-picker v-bind="item.otherOptions"></el-date-picker>
+                <el-date-picker
+                  v-bind="item.otherOptions"
+                  v-model="formData[`${item.field}`]"
+                ></el-date-picker>
               </template> </el-form-item
           ></el-col>
         </template>
       </el-row>
     </el-form>
+    <div class="footer">
+      <slot name="footer"></slot>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, PropType, ref, watch } from 'vue'
 import { IFormItem } from '../types'
 export default defineComponent({
   props: {
+    modelValue: {
+      type: Object,
+      required: true
+    },
     formItems: {
       type: Array as PropType<IFormItem[]>,
       default: () => []
@@ -66,8 +81,17 @@ export default defineComponent({
       default: () => ({ xl: 6, lg: 8, md: 12, sm: 24, xs: 24 })
     }
   },
-  setup() {
-    return {}
+  emits: ['update:modelValue'],
+  setup(props, { emit }) {
+    const formData = ref({ ...props.modelValue })
+    watch(
+      formData,
+      (newValue) => {
+        emit('update:modelValue', newValue)
+      },
+      { deep: true }
+    )
+    return { formData }
   }
 })
 </script>

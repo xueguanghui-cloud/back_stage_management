@@ -1,11 +1,13 @@
-import { ILoginState, IRootState } from './types'
 import { Module } from 'vuex'
-import { IAccount } from '../../service/login/type'
 import {
   accountLoginRequest,
   requestUserInfoById,
   requestUserMenus
 } from '../../service/login/login'
+
+import { ILoginState } from './types'
+import { IRootState } from '../types'
+import { IAccount } from '../../service/login/type'
 import localCache from '../../utils/cache'
 import router from '@/router'
 import { mapMenusToRoutes } from '@/utils/map-menus'

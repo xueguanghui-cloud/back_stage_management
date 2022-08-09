@@ -16,9 +16,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 import userInfo from './user-info.vue'
 import ghBreadcrumb, { IBreadcrumb } from '@/base-ui/breadcrumb'
+import { userStore } from '@/store'
+import { useRoute } from 'vue-router'
+import { pathMaptoBreadcrumbs } from '@/utils/map-menus'
 
 export default defineComponent({
   components: { userInfo, ghBreadcrumb },
@@ -31,7 +34,13 @@ export default defineComponent({
     }
 
     // 面包屑数据56min
-    const breadcrumbs: IBreadcrumb[] = []
+    const store = userStore()
+    const breadcrumbs = computed(() => {
+      const userMenus = store.state.login.userMenus
+      const route = useRoute()
+      const currentPath = route.path
+      return pathMaptoBreadcrumbs(userMenus, currentPath)
+    })
     return { isFold, handleFoldClick, breadcrumbs }
   }
 })

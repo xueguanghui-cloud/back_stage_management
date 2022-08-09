@@ -58,8 +58,8 @@ class GHRequest {
 
         // 将loading移除
         this.loading?.close()
-        const code = res.data.code
 
+        const code = res.data.code
         if (code !== 0) {
           console.log('请求失败~, 错误信息')
         } else {
@@ -114,19 +114,19 @@ class GHRequest {
   }
 
   // get请求
-  get<T>(config: GHRequestConfig<T>): Promise<T> {
+  get<T = any>(config: GHRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'GET' })
   }
   // post请求
-  post<T>(config: GHRequestConfig<T>): Promise<T> {
+  post<T = any>(config: GHRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'POST' })
   }
   // post请求
-  delete<T>(config: GHRequestConfig<T>): Promise<T> {
+  delete<T = any>(config: GHRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'DELETE' })
   }
   // post请求
-  patch<T>(config: GHRequestConfig<T>): Promise<T> {
+  patch<T = any>(config: GHRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'PATCH' })
   }
 }
