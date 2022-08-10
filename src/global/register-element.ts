@@ -1,4 +1,5 @@
 import { App } from 'vue'
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import 'element-plus/dist/index.css'
 import {
   ElButton,
@@ -31,9 +32,11 @@ import {
   ElOption,
   ElDatePicker,
   ElBreadcrumb,
-  ElBreadcrumbItem
+  ElBreadcrumbItem,
+  ElPagination,
+  ElConfigProvider
 } from 'element-plus'
-import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+
 const components = [
   ElButton,
   ElCheckbox,
@@ -65,7 +68,9 @@ const components = [
   ElOption,
   ElDatePicker,
   ElBreadcrumb,
-  ElBreadcrumbItem
+  ElBreadcrumbItem,
+  ElPagination,
+  ElConfigProvider
 ]
 
 export default function (app: App) {

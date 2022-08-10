@@ -1,5 +1,13 @@
 <template>
   <div class="table">
+    <div class="header">
+      <slot name="header">
+        <div class="title">{{ title }}</div>
+        <div class="handler">
+          <slot name="headerHandler"></slot>
+        </div>
+      </slot>
+    </div>
     <el-table
       :data="listData"
       border
@@ -30,6 +38,22 @@
         </el-table-column>
       </template>
     </el-table>
+    <div class="footer">
+      <slot name="footer">
+        <el-pagination
+          v-model:currentPage="currentPage4"
+          v-model:page-size="pageSize4"
+          :page-sizes="[100, 200, 300, 400]"
+          :small="small"
+          :disabled="disabled"
+          :background="background"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="listCount"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+        />
+      </slot>
+    </div>
   </div>
 </template>
 
@@ -37,9 +61,17 @@
 import { defineComponent } from 'vue'
 export default defineComponent({
   props: {
+    title: {
+      type: String,
+      default: ''
+    },
     listData: {
       type: Array,
       required: true
+    },
+    listCount: {
+      type: Number,
+      default: 0
     },
     propList: {
       type: Array,
@@ -59,8 +91,43 @@ export default defineComponent({
     const handleSelectionChange = (value: any) => {
       emit('selectionChange', value)
     }
-    return { handleSelectionChange }
+
+    const handleSizeChange = (val: number) => {
+      console.log(`${val} items per page`)
+    }
+    const handleCurrentChange = (val: number) => {
+      console.log(`current page: ${val}`)
+    }
+    return { handleSelectionChange, handleSizeChange, handleCurrentChange }
   }
 })
 </script>
-<style scoped></style>
+<style scoped lang="scss">
+.table {
+  .header {
+    display: flex;
+    height: 45px;
+    padding: 0 5px;
+    justify-content: space-between;
+    align-items: center;
+    .title {
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .handler {
+      align-items: center;
+    }
+  }
+  .footer {
+    margin-top: 15px;
+    display: flex;
+    justify-content: end;
+  }
+}
+.demo-pagination-block + .demo-pagination-block {
+  margin-top: 10px;
+}
+.demo-pagination-block .demonstration {
+  margin-bottom: 16px;
+}
+</style>

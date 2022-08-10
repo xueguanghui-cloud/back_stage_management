@@ -13,5 +13,4 @@ registerApp(app)
 app.use(store)
 setupStore()
 app.use(router)
-
 app.mount('#app')
