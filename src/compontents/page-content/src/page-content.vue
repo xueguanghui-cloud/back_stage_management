@@ -5,10 +5,15 @@
       :listCount="dataCount"
       v-bind="contentTableConfig"
       @selectionChange="selectionChange"
+      v-model:page="pageInfo"
     >
       <!-- header的插槽 -->
       <template #headerHandler>
-        <el-button type="primary" @click="handleNewUser" icon="circlePlus"
+        <el-button
+          type="primary"
+          v-if="isCreate"
+          @click="handleNewUser"
+          icon="circlePlus"
           >新建用户</el-button
         >
       </template>
@@ -27,9 +32,33 @@
       <template #updateAt="scoped">
         <strong>{{ $filters.formatTime(scoped.row.updateAt) }}</strong>
       </template>
-      <template #handler>
-        <el-button type="primary" size="small" icon="editPen">编辑</el-button>
-        <el-button type="danger" size="small" icon="delete">删除</el-button>
+      <template #handler="scoped">
+        <el-button
+          type="primary"
+          size="small"
+          icon="editPen"
+          v-if="isUpdate"
+          @click="handleUpdateClick(scoped.row)"
+          >编辑</el-button
+        >
+        <el-button
+          type="danger"
+          size="small"
+          icon="delete"
+          v-if="isDelete"
+          @click="handleDeleteClick(scoped.row)"
+          >删除</el-button
+        >
+      </template>
+      <!-- 在page-content中动态插入剩余的插槽 -->
+      <template
+        v-for="item in otherPropsSlots"
+        :key="item.prop"
+        #[item.slotName]="scope"
+      >
+        <template v-if="item.slotName">
+          <slot :name="item.slotName" :row="scope.row"></slot>
+        </template>
       </template>
       <!-- footer的插槽 -->
       <template #footer> </template>
@@ -38,9 +67,11 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, ref, watch } from 'vue'
 import GhTable from '@/base-ui/table'
 import { useStore } from 'vuex'
+import { usePermission } from '@/hooks/usePermission'
+import { ElMessage, ElMessageBox } from 'element-plus'
 export default defineComponent({
   components: { GhTable },
   props: {
@@ -54,30 +85,40 @@ export default defineComponent({
     }
   },
   setup(props) {
-    // 网络请求
     const store = useStore()
 
-    // 发送网络请求
+    // 1. 获取操作权限
+    const isCreate = usePermission(props.pageName, 'create')
+    const isUpdate = usePermission(props.pageName, 'update')
+    const isDelete = usePermission(props.pageName, 'delete')
+    const isQuery = usePermission(props.pageName, 'query')
+
+    // 1.双向绑定pageInfo
+    const pageInfo = ref({ currentPage: 1, pageSize: 10 })
+    watch(pageInfo, () => {
+      getPageData()
+    })
+    // 2.发送网络请求
     const getPageData = (queryInfo: any = {}) => {
+      if (!isQuery) return
       let newQueryInfo = {}
       for (const key in queryInfo) {
         if (queryInfo[key] !== '') {
           newQueryInfo[key] = queryInfo[key]
         }
       }
-
       store.dispatch('system/getPageListAction', {
         pageName: props.pageName,
         queryInfo: {
-          offset: 0,
-          size: 10,
+          offset: (pageInfo.value.currentPage - 1) * pageInfo.value.pageSize,
+          size: pageInfo.value.pageSize,
           ...newQueryInfo
         }
       })
     }
     getPageData()
 
-    // 从vuex中获取数据 1：32
+    // 3.从vuex中获取数据 1：32
     const dataList = computed(() =>
       store.getters['system/pageListData'](props.pageName)
     )
@@ -90,9 +131,52 @@ export default defineComponent({
     const handleNewUser = () => {
       console.log('new User')
     }
-    return { dataList, dataCount, selectionChange, handleNewUser, getPageData }
+
+    // 4. 获取其他的动态插槽名称
+    const otherPropsSlots = props.contentTableConfig?.propList.filter(
+      (item) => {
+        if (item.slotName === 'status') return false
+        if (item.slotName === 'createAt') return false
+        if (item.slotName === 'updateAt') return false
+        if (item.slotName === 'handler') return false
+        return true
+      }
+    )
+
+    // 删除和编辑
+    const handleDeleteClick = (item: any) => {
+      ElMessageBox.confirm('您确认删除这条数据吗？', '', {
+        showClose: false,
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'error'
+      }).then(() => {
+        store.dispatch('system/deletePageDataAction', {
+          id: item.id,
+          pageName: props.pageName
+        })
+      })
+    }
+    const handleUpdateClick = (item: any) => {
+      console.log('bainji')
+    }
+    return {
+      isCreate,
+      isUpdate,
+      isDelete,
+      pageInfo,
+      dataList,
+      dataCount,
+      otherPropsSlots,
+      selectionChange,
+      handleNewUser,
+      getPageData,
+      handleDeleteClick,
+      handleUpdateClick
+    }
   }
 })
+// 十一：35分
 </script>
 
 <style scoped lang="scss">
