@@ -7,9 +7,8 @@
       destroy-on-close
       center
     >
-      <div>
-        <gh-form v-bind="modalFormConfig" v-model="modalFormData"></gh-form>
-      </div>
+      <gh-form v-bind="modalFormConfig" v-model="modalFormData"></gh-form>
+      <slot></slot>
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="centerDialogVisible = false">取消</el-button>
@@ -38,6 +37,10 @@ export default defineComponent({
     pageName: {
       type: String,
       required: true
+    },
+    otherInfo: {
+      type: Object,
+      default: () => ({})
     }
   },
   setup(props) {
@@ -62,14 +65,14 @@ export default defineComponent({
         // 编辑
         store.dispatch('system/updatePageDataAction', {
           pageName: props.pageName,
-          updateData: { ...modalFormData.value },
+          updateData: { ...modalFormData.value, ...props.otherInfo },
           id: props.defaultInfo.id
         })
       } else {
         // 创建
         store.dispatch('system/createPageDataAction', {
           pageName: props.pageName,
-          newData: { ...modalFormData.value }
+          newData: { ...modalFormData.value, ...props.otherInfo }
         })
       }
     }
