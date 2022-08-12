@@ -12,7 +12,7 @@
         <el-button
           type="primary"
           v-if="isCreate"
-          @click="handleNewUser"
+          @click="handleNewData"
           icon="circlePlus"
           >新建用户</el-button
         >
@@ -71,7 +71,7 @@ import { computed, defineComponent, ref, watch } from 'vue'
 import GhTable from '@/base-ui/table'
 import { useStore } from 'vuex'
 import { usePermission } from '@/hooks/usePermission'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElMessageBox } from 'element-plus'
 export default defineComponent({
   components: { GhTable },
   props: {
@@ -84,7 +84,8 @@ export default defineComponent({
       required: true
     }
   },
-  setup(props) {
+  emits: ['newData', 'updateData'],
+  setup(props, { emit }) {
     const store = useStore()
 
     // 1. 获取操作权限
@@ -125,12 +126,6 @@ export default defineComponent({
     const dataCount = computed(() =>
       store.getters['system/pageListCount'](props.pageName)
     )
-    const selectionChange = (value: any) => {
-      console.log(value)
-    }
-    const handleNewUser = () => {
-      console.log('new User')
-    }
 
     // 4. 获取其他的动态插槽名称
     const otherPropsSlots = props.contentTableConfig?.propList.filter(
@@ -143,7 +138,10 @@ export default defineComponent({
       }
     )
 
-    // 删除和编辑
+    // 5. 新建、删除和编辑
+    const handleNewData = () => {
+      emit('newData')
+    }
     const handleDeleteClick = (item: any) => {
       ElMessageBox.confirm('您确认删除这条数据吗？', '', {
         showClose: false,
@@ -158,8 +156,13 @@ export default defineComponent({
       })
     }
     const handleUpdateClick = (item: any) => {
-      console.log('bainji')
+      emit('updateData', item)
     }
+
+    const selectionChange = (value: any) => {
+      console.log(value)
+    }
+
     return {
       isCreate,
       isUpdate,
@@ -169,7 +172,7 @@ export default defineComponent({
       dataCount,
       otherPropsSlots,
       selectionChange,
-      handleNewUser,
+      handleNewData,
       getPageData,
       handleDeleteClick,
       handleUpdateClick

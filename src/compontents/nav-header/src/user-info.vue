@@ -20,7 +20,7 @@
           ><el-icon class="el-icon--right"> <House /> </el-icon
           >部门管理</el-dropdown-item
         >
-        <el-dropdown-item divided
+        <el-dropdown-item divided @click="handleExitClick"
           ><el-icon class="el-icon--right"> <CircleCloseFilled /> </el-icon
           >退出登录</el-dropdown-item
         >
@@ -32,11 +32,22 @@
 <script lang="ts">
 import { userStore } from '@/store'
 import { computed, defineComponent } from 'vue'
+import LocalCache from '@/utils/cache'
+import { useRouter } from 'vue-router'
 export default defineComponent({
   setup() {
     const store = userStore()
     const userName = computed(() => store.state.login.userinfo.name)
-    return { userName }
+
+    // 退出登录
+    const router = useRouter()
+    const handleExitClick = () => {
+      console.log('让推出')
+
+      LocalCache.deleteCache('token')
+      router.push('/main')
+    }
+    return { userName, handleExitClick }
   }
 })
 </script>
