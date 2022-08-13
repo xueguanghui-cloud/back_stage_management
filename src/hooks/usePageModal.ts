@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import PageModal from '@/compontents/page-modal'
 
-type CallbackFn = () => void
+type CallbackFn = (item?: any) => void
 
 export function usePageModal(newCb?: CallbackFn, updateCb?: CallbackFn) {
   const pageModalRef = ref<InstanceType<typeof PageModal>>()
@@ -20,7 +20,7 @@ export function usePageModal(newCb?: CallbackFn, updateCb?: CallbackFn) {
     if (pageModalRef.value) {
       pageModalRef.value.centerDialogVisible = true
     }
-    updateCb && updateCb()
+    updateCb && updateCb(value)
   }
   return [pageModalRef, defaultInfo, handleNewData, handleUpdateData]
 }

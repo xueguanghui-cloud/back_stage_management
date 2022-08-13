@@ -87,35 +87,20 @@ export function mapMenusToPermission(userMenus: any[]) {
   return permissions
 }
 
-export { firstMenu }
+export function menuMapLeafKeys(menuList: any[]) {
+  const leafKeys: number[] = []
 
-/* export function pathMaptoBreadcrumbs(
-  userMenus: any[],
-  currentPath: string
-): any {
-  const breadcrumbs: IBreadcrumb[] = []
-  for (const menu of userMenus) {
-    if (menu.type === 1) {
-      const findMenu = pathMaptoMenu(menu.children ?? [], currentPath)
-      if (findMenu) {
-        breadcrumbs.push({ name: menu.name, path: menu.url })
-        breadcrumbs.push({ name: findMenu.name, path: findMenu.url })
-        return findMenu
+  const _recurseGetLeaf = (menuList: any[]) => {
+    for (const menu of menuList) {
+      if (menu.children) {
+        _recurseGetLeaf(menu.children)
+      } else {
+        leafKeys.push(menu.id)
       }
-    } else if (menu.type === 2 && menu.url === currentPath) {
-      return menu
     }
   }
-  return breadcrumbs
+  _recurseGetLeaf(menuList)
+  return leafKeys
 }
 
-export function pathMaptoMenu(userMenus: any[], currentPath: string): any {
-  for (const menu of userMenus) {
-    if (menu.type === 1) {
-      const findMenu = pathMaptoMenu(menu.children ?? [], currentPath)
-      if (findMenu) return findMenu
-    } else if (menu.type === 2 && menu.url === currentPath) {
-      return menu
-    }
-  }
-} */
+export { firstMenu }
