@@ -26,6 +26,7 @@ export default defineComponent({
   components: { NavMenu, NavHeader },
   setup() {
     const isCollapse = ref(false)
+
     const foldChange = (isFold: boolean) => {
       isCollapse.value = isFold
     }

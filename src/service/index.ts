@@ -2,7 +2,7 @@ import GHRequest from './request/request'
 import { BASE_URL, TIME_OUT } from './request/config'
 import localCache from '@/utils/cache'
 
-const requestService = new GHRequest({
+const GhRequest = new GHRequest({
   baseURL: BASE_URL,
   timeout: TIME_OUT,
   interceptors: {
@@ -30,4 +30,4 @@ const requestService = new GHRequest({
   }
 })
 
-export default requestService
+export default GhRequest
