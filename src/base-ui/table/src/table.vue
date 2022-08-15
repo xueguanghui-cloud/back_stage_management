@@ -5,7 +5,7 @@
       <slot name="header">
         <div class="title">{{ title }}</div>
         <div class="handler">
-          <slot name="headerHandler"></slot>
+          <slot name="headerHandler"> </slot>
         </div>
       </slot>
     </div>

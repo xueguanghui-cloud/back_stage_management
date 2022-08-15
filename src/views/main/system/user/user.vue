@@ -9,8 +9,8 @@
     <!-- 数据展示 -->
     <page-content
       ref="pageContentRef"
-      :contentTableConfig="contentTableConfig"
       pageName="users"
+      :contentTableConfig="contentTableConfig"
       @newData="handleNewData"
       @updateData="handleUpdateData"
     ></page-content>

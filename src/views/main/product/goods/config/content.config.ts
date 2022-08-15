@@ -1,5 +1,6 @@
 export const contentTableConfig = {
   title: '商品列表',
+  buttonName: '添加商品',
   propList: [
     { prop: 'name', label: '商品名称', minWidth: '50' },
     { prop: 'oldPrice', label: '原价格', minWidth: '50' },

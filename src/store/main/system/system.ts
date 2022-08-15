@@ -18,7 +18,9 @@ const systemModule: Module<ISystemState, IRootState> = {
       goodsList: [],
       goodsCount: 0,
       menuList: [],
-      menuCount: 0
+      menuCount: 0,
+      departmentList: [],
+      departmentCount: 0
     }
   },
   getters: {
@@ -57,6 +59,12 @@ const systemModule: Module<ISystemState, IRootState> = {
     },
     changeMenuCount(state, totalCount: number) {
       state.menuCount = totalCount
+    },
+    changeDepartmentList(state, list: any[]) {
+      state.departmentList = list
+    },
+    changeDepartmentCount(state, totalCount: number) {
+      state.departmentCount = totalCount
     }
   },
   actions: {
@@ -73,6 +81,7 @@ const systemModule: Module<ISystemState, IRootState> = {
 
       const changePageName =
         (pageName.slice(0, 1) as string).toUpperCase() + pageName.slice(1)
+      console.log(list)
 
       commit(`change${changePageName}List`, list)
       commit(`change${changePageName}Count`, totalCount)

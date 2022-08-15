@@ -1,9 +1,9 @@
 export const contentTableConfig = {
-  title: '角色列表',
-  buttonName: '添加角色',
+  title: '部门列表',
+  buttonName: '添加部门',
   propList: [
-    { prop: 'name', label: '角色名', minWidth: '100' },
-    { prop: 'intro', label: '权限介绍', minWidth: '100' },
+    { prop: 'name', label: '部门名称', minWidth: '100' },
+    { prop: 'leader', label: '领导', minWidth: '100' },
     {
       prop: 'createAt',
       label: '创建时间',
@@ -18,6 +18,5 @@ export const contentTableConfig = {
     },
     { prop: 'handle', label: '操作', minWidth: '120', slotName: 'handler' }
   ],
-  showIndexColumn: true,
-  showSelectColumn: true
+  showIndexColumn: true
 }

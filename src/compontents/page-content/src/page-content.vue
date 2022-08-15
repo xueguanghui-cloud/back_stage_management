@@ -11,10 +11,10 @@
       <template #headerHandler>
         <el-button
           type="primary"
-          v-if="isCreate"
+          v-if="isCreate && contentTableConfig.buttonName"
           @click="handleNewData"
           icon="circlePlus"
-          >新建用户</el-button
+          >{{ contentTableConfig.buttonName }}</el-button
         >
       </template>
       <!-- 列中的插槽 -->
