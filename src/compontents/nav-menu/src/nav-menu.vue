@@ -120,7 +120,7 @@ export default defineComponent({
     }
   }
 
-  ::v-deep .el-submenu__title {
+  :deep(.el-submenu__title) {
     background-color: #001529 !important;
   }
 
@@ -141,10 +141,9 @@ export default defineComponent({
     display: inline-block;
     margin: 0 5px;
   }
-  ::v-deep {
-    .el-menu .el-menu--inline {
-      background-color: #193956 !important;
-    }
+
+  :deep(.el-menu .el-menu--inline) {
+    background-color: #193956 !important;
   }
 }
 

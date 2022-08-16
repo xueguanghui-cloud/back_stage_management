@@ -64,10 +64,8 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .login-account {
-  ::v-deep {
-    .el-form-item:last-child {
-      margin-top: 30px;
-    }
+  :deep(.el-form-item:last-child) {
+    margin-top: 30px;
   }
 }
 </style>

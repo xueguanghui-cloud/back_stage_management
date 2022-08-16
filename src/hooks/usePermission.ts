@@ -8,5 +8,6 @@ export function usePermission(pageName: string, handleName: string) {
    !name => false
    !!name => true
     */
+
   return !!permissions.find((item) => item === verifyPermission)
 }

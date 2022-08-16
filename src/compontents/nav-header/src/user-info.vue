@@ -42,8 +42,6 @@ export default defineComponent({
     // 退出登录
     const router = useRouter()
     const handleExitClick = () => {
-      console.log('让推出')
-
       LocalCache.deleteCache('token')
       router.push('/main')
     }

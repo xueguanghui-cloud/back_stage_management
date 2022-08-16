@@ -75,11 +75,10 @@ export default defineComponent({
 .login-panel {
   margin-bottom: 150px;
   width: 320px;
-  ::v-deep {
-    .el-tabs {
-      border-radius: 5px;
-    }
+  :deep(.el-tabs) {
+    border-radius: 5px;
   }
+
   .title {
     color: #e7e3e3;
     text-align: center;

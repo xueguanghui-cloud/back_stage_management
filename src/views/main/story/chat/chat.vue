@@ -1,6 +1,6 @@
 <template>
   <div class="chat">
-    <h2>chat</h2>
+    <p style="padding: 10px 0">暂时不能书写故事，敬请功能开放...</p>
   </div>
 </template>
 

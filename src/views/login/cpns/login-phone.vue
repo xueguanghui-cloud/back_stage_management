@@ -40,11 +40,10 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-::v-deep {
-  .el-form-item:last-child {
-    margin-top: 30px;
-  }
+:deep(.el-form-item:last-child) {
+  margin-top: 30px;
 }
+
 .get-code {
   display: flex;
 }
